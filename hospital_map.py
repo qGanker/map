@@ -2,7 +2,7 @@ import streamlit as st
 import pydeck as pdk
 import pandas as pd
 
-# Данные по больницам
+# Полные данные по учреждениям
 data = pd.DataFrame([
     {
         "name": "Гомельская областная клиническая больница",
@@ -86,13 +86,29 @@ data = pd.DataFrame([
 # Заголовок
 st.title("🏥 Учреждения здравоохранения Гомельской области")
 
+# Боковая панель фильтров
+st.sidebar.header("🔎 Фильтры")
+
+has_rkt = st.sidebar.checkbox("Показать только с РКТ", value=False)
+has_mrt = st.sidebar.checkbox("Показать только с МРТ", value=False)
+
+filtered = data.copy()
+if has_rkt:
+    filtered = filtered[~filtered["rkt"].str.strip().isin(["—", "Нет", ""])]
+if has_mrt:
+    filtered = filtered[~filtered["mrt"].str.strip().isin(["—", "Нет", ""])]
+
 # Выбор больницы
-selected_name = st.selectbox("📋 Выберите учреждение", data["name"])
+selected_name = st.selectbox("📋 Выберите учреждение", filtered["name"] if not filtered.empty else ["Нет учреждений"])
 
-# Получение выбранной строки
-selected_row = data[data["name"] == selected_name].iloc[0]
+# Получение строки с выбранной больницей
+if not filtered.empty:
+    selected_row = filtered[filtered["name"] == selected_name].iloc[0]
+else:
+    st.warning("Нет учреждений, удовлетворяющих выбранным фильтрам.")
+    st.stop()
 
-# Карта с фокусом на выбранной больнице
+# Карта
 st.pydeck_chart(pdk.Deck(
     map_style=None,
     initial_view_state=pdk.ViewState(
@@ -104,7 +120,7 @@ st.pydeck_chart(pdk.Deck(
     layers=[
         pdk.Layer(
             "ScatterplotLayer",
-            data=data,
+            data=filtered,
             get_position='[lon, lat]',
             get_radius=200,
             get_fill_color=[255, 0, 0, 160],
@@ -112,7 +128,7 @@ st.pydeck_chart(pdk.Deck(
         ),
         pdk.Layer(
             "TextLayer",
-            data=data,
+            data=filtered,
             get_position='[lon, lat]',
             get_text='name',
             get_size=14,
@@ -130,7 +146,7 @@ st.pydeck_chart(pdk.Deck(
     }
 ))
 
-# Отображение инфо о выбранной больнице
+# Подробная информация
 st.markdown(f"""
 ### ℹ️ Информация о выбранной больнице:
 - **Название:** {selected_row['name']}
