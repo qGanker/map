@@ -1,44 +1,76 @@
 import streamlit as st
-import folium
-from streamlit_folium import st_folium
+import pydeck as pdk
+import pandas as pd
 
-# Список больниц (пример)
-hospitals = [
+# Пример данных: замените или расширьте
+data = pd.DataFrame([
     {
         "name": "Гомельская областная больница",
-        "lat": 52.426739,
-        "lon": 31.014120,
-        "info": "МРТ: Siemens Aera (48 срезов)<br>РКТ: Toshiba Aquilion (64 среза)"
+        "lat": 52.4412,
+        "lon": 30.9870,
+        "rkt": "Siemens Somatom, 64 среза",
+        "mrt": "Philips Achieva 1.5T"
     },
     {
-        "name": "Мозырская центральная больница",
-        "lat": 52.042365,
-        "lon": 29.245457,
-        "info": "МРТ: Philips Ingenia (32 среза)<br>РКТ: GE BrightSpeed (16 срезов)"
+        "name": "Мозырская городская больница",
+        "lat": 52.0500,
+        "lon": 29.2700,
+        "rkt": "GE BrightSpeed, 16 срезов",
+        "mrt": "Нет"
+    },
+    {
+        "name": "Речицкая ЦРБ",
+        "lat": 52.3693,
+        "lon": 30.3945,
+        "rkt": "Toshiba Aquilion, 32 среза",
+        "mrt": "Siemens Avanto 1.5T"
     }
-]
+])
 
-st.set_page_config(layout="wide")
-st.title("Карта больниц Гомельской области")
+# Заголовок
+st.title("Больницы Гомельской области")
+search_query = st.text_input("Поиск по названию больницы")
 
-# Создаём карту с нейтральным источником tiles
-m = folium.Map(
-    location=[52.441176, 30.993005],
-    zoom_start=8,
-    tiles="https://{{s}}.basemaps.cartocdn.com/light_all/{{z}}/{{x}}/{{y}}{{r}}.png",
-    attr='&copy; <a href="https://carto.com/">CARTO</a>'
-)
+# Фильтрация
+if search_query:
+    filtered_data = data[data["name"].str.contains(search_query, case=False)]
+else:
+    filtered_data = data
 
-# Фильтр по поиску
-query = st.text_input("Поиск больницы по названию")
-filtered = [h for h in hospitals if query.lower() in h["name"].lower()] if query else hospitals
-
-# Добавляем маркеры
-for h in filtered:
-    folium.Marker(
-        location=[h["lat"], h["lon"]],
-        popup=f"<b>{h['name']}</b><br>{h['info']}",
-        tooltip=h["name"]
-    ).add_to(m)
-
-st_data = st_folium(m, width=900, height=600)
+# Карта с маркерами
+st.pydeck_chart(pdk.Deck(
+    map_style=None,
+    initial_view_state=pdk.ViewState(
+        latitude=52.4,
+        longitude=30.9,
+        zoom=7,
+        pitch=0,
+    ),
+    layers=[
+        pdk.Layer(
+            "ScatterplotLayer",
+            data=filtered_data,
+            get_position='[lon, lat]',
+            get_radius=8000,
+            get_fill_color=[255, 0, 0, 160],
+            pickable=True
+        ),
+        pdk.Layer(
+            "TextLayer",
+            data=filtered_data,
+            get_position='[lon, lat]',
+            get_text='name',
+            get_size=16,
+            get_color=[0, 0, 0],
+            get_alignment_baseline="'bottom'"
+        )
+    ],
+    tooltip={
+        "html": "<b>{name}</b><br/>РКТ: {rkt}<br/>МРТ: {mrt}",
+        "style": {
+            "backgroundColor": "white",
+            "color": "black",
+            "fontSize": "12px"
+        }
+    }
+))
