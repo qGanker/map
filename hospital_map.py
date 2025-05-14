@@ -6,6 +6,7 @@ import pandas as pd
 data = pd.DataFrame([
     {
         "name": "Гомельская областная клиническая больница",
+        "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4noRQ5xFG3MnYVf8w8FHmwLYLFGAmqtOsvNzQrgycKgsKEi3Tzk-0x1LhNJpiQs5hBo6T0yL5xSYQtw-7k_I-OmJO1IhOOe8EkpjWPbuczZx8kTOvXGuauppgS76sMAGlLk1dNyM=s680-w680-h510-rw"
         "lat": 52.4228,
         "lon": 30.9784,
         "rkt": "Aquilion LB (16 срезов)",
