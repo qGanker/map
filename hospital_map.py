@@ -1,39 +1,101 @@
 import streamlit as st
-import pandas as pd
-import pydeck as pdk
+import folium
+from folium.plugins import Search
+from streamlit_folium import st_folium
 
-# === Заголовок ===
-st.set_page_config(page_title="Карта больниц Гомельской области", layout="wide")
-st.title("\U0001F3E5 Больницы Гомельской области")
+st.set_page_config(page_title="Больницы Гомельской области", layout="wide")
 
-# === Данные (примерные координаты и информация) ===
-data = [
-    {"name": "Гомельская областная клиническая больница", "lat": 52.4412, "lon": 30.9878,
-     "rct": "Siemens SOMATOM, 64 среза", "mrt": "Philips Ingenia, 1.5 Тл"},
-    {"name": "Мозырская городская больница", "lat": 52.0436, "lon": 29.2722,
-     "rct": "GE Optima CT, 16 срезов", "mrt": "Hitachi Aperto, 0.4 Тл"},
-    {"name": "Речицкая ЦРБ", "lat": 52.3626, "lon": 30.3935,
-     "rct": "Toshiba Aquilion, 32 среза", "mrt": "нет"},
-    {"name": "Светлогорская ЦРБ", "lat": 52.6335, "lon": 29.7333,
-     "rct": "Siemens Emotion, 16 срезов", "mrt": "нет"},
-    {"name": "Жлобинская ЦРБ", "lat": 52.8924, "lon": 30.0184,
-     "rct": "Philips Brilliance, 64 среза", "mrt": "нет"},
-    {"name": "Новобелицкая больница (Гомель)", "lat": 52.4002, "lon": 30.9031,
-     "rct": "Canon CT, 128 срезов", "mrt": "Siemens Avanto, 1.5 Тл"}
+# Данные по больницам
+hospitals = [
+    {
+        "name": "Гомельская областная клиническая больница",
+        "lat": 52.4285, "lon": 30.9939,
+        "ct_model": "Aquilion LB", "slices": "16",
+        "mri_model": "Ingenia Philips"
+    },
+    {
+        "name": "Гомельский онкодиспансер",
+        "lat": 52.4206, "lon": 30.9990,
+        "ct_model": "Aquilion Lightning", "slices": "80",
+        "mri_model": "—"
+    },
+    {
+        "name": "Гомельская городская клиническая больница №1",
+        "lat": 52.4397, "lon": 30.9870,
+        "ct_model": "Revolution Evo", "slices": "28",
+        "mri_model": "Ingenia Philips"
+    },
+    {
+        "name": "Мозырская городская больница",
+        "lat": 52.0493, "lon": 29.2667,
+        "ct_model": "Bright Speed Elite", "slices": "16",
+        "mri_model": "ANKE SuperMarie"
+    },
+    {
+        "name": "Мозырская ЦРБ",
+        "lat": 52.0386, "lon": 29.3091,
+        "ct_model": "Somatom go.Up", "slices": "—",
+        "mri_model": "MagFinder WA 13200"
+    },
+    {
+        "name": "Жлобинская ЦРБ",
+        "lat": 52.8912, "lon": 30.0333,
+        "ct_model": "Somatom Emotion / go.Up", "slices": "—",
+        "mri_model": "—"
+    },
+    {
+        "name": "Светлогорская ЦРБ",
+        "lat": 52.6326, "lon": 29.7400,
+        "ct_model": "Toshiba Aquilion", "slices": "—",
+        "mri_model": "—"
+    },
+    {
+        "name": "Речицкая ЦРБ",
+        "lat": 52.3632, "lon": 30.3921,
+        "ct_model": "Ventum", "slices": "64",
+        "mri_model": "—"
+    },
+    {
+        "name": "Петриковская ЦРБ",
+        "lat": 52.1305, "lon": 28.4930,
+        "ct_model": "Ventum", "slices": "—",
+        "mri_model": "—"
+    },
+    {
+        "name": "Хойникская ЦРБ",
+        "lat": 51.8872, "lon": 30.2581,
+        "ct_model": "Ventum", "slices": "—",
+        "mri_model": "—"
+    },
+    {
+        "name": "Чечерская ЦРБ",
+        "lat": 52.8916, "lon": 30.9151,
+        "ct_model": "Ventum", "slices": "—",
+        "mri_model": "—"
+    },
 ]
 
-df = pd.DataFrame(data)
+# Поиск
+query = st.text_input("🔍 Поиск по учреждению", "")
 
-# === Поиск по названию ===
-search = st.text_input("Поиск больницы по названию:").lower()
-if search:
-    df = df[df['name'].str.lower().str.contains(search)]
+# Инициализация карты
+m = folium.Map(location=[52.4, 30.9], zoom_start=8, tiles="CartoDB positron")
 
-# === Карта ===
-st.map(df[['lat', 'lon']])
+# Добавление маркеров
+for hospital in hospitals:
+    if query.lower() in hospital["name"].lower():
+        folium.Marker(
+            location=[hospital["lat"], hospital["lon"]],
+            tooltip=hospital["name"],
+            popup=folium.Popup(
+                f"<b>{hospital['name']}</b><br>"
+                f"📌 <b>РКТ:</b> {hospital['ct_model']}<br>"
+                f"🧩 <b>Срезов:</b> {hospital['slices']}<br>"
+                f"🧲 <b>МРТ:</b> {hospital['mri_model']}",
+                max_width=300
+            ),
+            icon=folium.Icon(color="blue", icon="plus-sign", prefix='fa')
+        ).add_to(m)
 
-# === Отображение информации по больницам ===
-for index, row in df.iterrows():
-    with st.expander(row['name']):
-        st.markdown(f"**РКТ:** {row['rct']}")
-        st.markdown(f"**МРТ:** {row['mrt']}")
+# Отображение карты
+st_folium(m, width=1000, height=700)
