@@ -62,14 +62,20 @@ data = [
     },
 ]
 
-# Интерфейс
+# Streamlit UI
 st.set_page_config(page_title="Учреждения здравоохранения Гомельской области", layout="wide")
 st.title("🩺 Учреждения здравоохранения Гомельской области")
 search = st.text_input("🔎 Поиск по названию учреждения")
 
-# Карта
-m = folium.Map(location=[52.4, 30.9], zoom_start=8, tiles="Stamen Terrain")
+# Создание карты с нейтральными тайлами
+m = folium.Map(
+    location=[52.4, 30.9],
+    zoom_start=8,
+    tiles="https://stamen-tiles.a.ssl.fastly.net/terrain/{z}/{x}/{y}.jpg",
+    attr="Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under ODbL."
+)
 
+# Добавление маркеров
 for entry in data:
     if search.lower() in entry["Учреждение"].lower():
         folium.Marker(
@@ -84,4 +90,4 @@ for entry in data:
         ).add_to(m)
 
 # Отображение карты
-st_data = st_folium(m, width=1300, height=700)
+st_folium(m, width=1300, height=700)
