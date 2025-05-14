@@ -103,7 +103,7 @@ if not filtered.empty:
     selected_row = filtered[filtered["name"] == selected_name].iloc[0]
     lat_center = selected_row["lat"]
     lon_center = selected_row["lon"]
-    zoom_level = 15  # Увеличенный зум
+    zoom_level = 40  # Увеличенный зум
 else:
     st.warning("Нет учреждений, удовлетворяющих фильтрам.")
     st.stop()
