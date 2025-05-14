@@ -2,14 +2,14 @@ import streamlit as st
 import pydeck as pdk
 import pandas as pd
 
-# Актуальные данные по учреждениям
+# Данные по больницам
 data = pd.DataFrame([
     {
         "name": "Гомельская областная клиническая больница",
         "lat": 52.4228,
         "lon": 30.9784,
         "rkt": "Aquilion LB (16 срезов)",
-        "mrt": "Ingenia Philips"
+        "mrt": "Ingenia Philips 1.5T"
     },
     {
         "name": "Гомельский онкодиспансер",
@@ -23,34 +23,34 @@ data = pd.DataFrame([
         "lat": 52.4416,
         "lon": 30.9942,
         "rkt": "Revolution Evo (28 срезов)",
-        "mrt": "Ingenia Philips"
+        "mrt": "Ingenia Philips 1.5T"
     },
     {
         "name": "Мозырская городская больница",
         "lat": 52.0424,
         "lon": 29.2725,
-        "rkt": "Bright Speed Elite (16 срезов)",
-        "mrt": "ANKE SuperMarie"
+        "rkt": "BrightSpeed Elite (16 срезов)",
+        "mrt": "ANKE SuperMarie 1.5T"
     },
     {
         "name": "Мозырская ЦРБ",
         "lat": 52.0506,
         "lon": 29.2596,
-        "rkt": "Somatom go.Up",
-        "mrt": "MagFinder WA 13200"
+        "rkt": "Somatom go.Up (32 среза)",
+        "mrt": "MagFinder WA 13200 (1.5T)"
     },
     {
         "name": "Жлобинская ЦРБ",
         "lat": 52.8923,
         "lon": 30.0262,
-        "rkt": "Somatom Emotion / go.Up",
+        "rkt": "Somatom go.Up (32 среза)",
         "mrt": "—"
     },
     {
         "name": "Светлогорская ЦРБ",
         "lat": 52.6281,
         "lon": 29.7396,
-        "rkt": "Toshiba Aquilion",
+        "rkt": "Toshiba Aquilion (16 срезов)",
         "mrt": "—"
     },
     {
@@ -64,56 +64,55 @@ data = pd.DataFrame([
         "name": "Петриковская ЦРБ",
         "lat": 52.1282,
         "lon": 28.4868,
-        "rkt": "Ventum",
+        "rkt": "Ventum (64 среза)",
         "mrt": "—"
     },
     {
         "name": "Хойникская ЦРБ",
         "lat": 51.8802,
         "lon": 29.6257,
-        "rkt": "Ventum",
+        "rkt": "Ventum (64 среза)",
         "mrt": "—"
     },
     {
         "name": "Чечерская ЦРБ",
         "lat": 52.9145,
         "lon": 30.9040,
-        "rkt": "Ventum",
+        "rkt": "Ventum (64 среза)",
         "mrt": "—"
     },
 ])
 
 # Заголовок
-st.title("🏥 Больницы Гомельской области")
-search_query = st.text_input("🔎 Поиск по названию больницы")
+st.title("🏥 Учреждения здравоохранения Гомельской области")
 
-# Фильтрация
-if search_query:
-    filtered_data = data[data["name"].str.contains(search_query, case=False)]
-else:
-    filtered_data = data
+# Выбор больницы
+selected_name = st.selectbox("📋 Выберите учреждение", data["name"])
 
-# Карта с маркерами
+# Получение выбранной строки
+selected_row = data[data["name"] == selected_name].iloc[0]
+
+# Карта с фокусом на выбранной больнице
 st.pydeck_chart(pdk.Deck(
     map_style=None,
     initial_view_state=pdk.ViewState(
-        latitude=52.4,
-        longitude=30.9,
-        zoom=7,
+        latitude=selected_row["lat"],
+        longitude=selected_row["lon"],
+        zoom=12,
         pitch=0,
     ),
     layers=[
         pdk.Layer(
             "ScatterplotLayer",
-            data=filtered_data,
+            data=data,
             get_position='[lon, lat]',
-            get_radius=4000,
+            get_radius=200,
             get_fill_color=[255, 0, 0, 160],
             pickable=True
         ),
         pdk.Layer(
             "TextLayer",
-            data=filtered_data,
+            data=data,
             get_position='[lon, lat]',
             get_text='name',
             get_size=14,
@@ -131,10 +130,10 @@ st.pydeck_chart(pdk.Deck(
     }
 ))
 
-# Список больниц снизу
-st.subheader("📋 Список учреждений")
-st.dataframe(data[["name", "rkt", "mrt"]].rename(columns={
-    "name": "Учреждение",
-    "rkt": "РКТ",
-    "mrt": "МРТ"
-}), use_container_width=True)
+# Отображение инфо о выбранной больнице
+st.markdown(f"""
+### ℹ️ Информация о выбранной больнице:
+- **Название:** {selected_row['name']}
+- **🖥 РКТ:** {selected_row['rkt']}
+- **🧲 МРТ:** {selected_row['mrt']}
+""")
