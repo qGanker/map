@@ -1,8 +1,9 @@
 import streamlit as st
 import pydeck as pdk
 import pandas as pd
+import os
 
-# Основные данные о больницах
+# Загружаем данные
 data = pd.DataFrame([
     {
         "name": "Гомельская областная клиническая больница",
@@ -10,7 +11,8 @@ data = pd.DataFrame([
         "lon": 30.9784,
         "rkt": "Aquilion LB (16 срезов)",
         "mrt": "Ingenia Philips 1.5T",
-        "contacts": "📍 ул. Ильича, 152, Гомель\n📞 +375 232 75-41-00\n🌐 https://gokb.by/"
+        "contacts": "📍 ул. Ильича, 152, Гомель\n📞 +375 232 75-41-00\n🌐 https://gokb.by/",
+        "image": "images/gomel_obl.jpg"
     },
     {
         "name": "Гомельский онкодиспансер",
@@ -18,7 +20,8 @@ data = pd.DataFrame([
         "lon": 31.0072,
         "rkt": "Aquilion Lightning (80 срезов)",
         "mrt": "—",
-        "contacts": "📍 ул. Головацкого, 123, Гомель\n📞 +375 232 41-04-60\n🌐 https://gomelonk.by/"
+        "contacts": "📍 ул. Головацкого, 123, Гомель\n📞 +375 232 41-04-60\n🌐 https://gomelonk.by/",
+        "image": "images/gomel_onko.jpg"
     },
     {
         "name": "Гомельская городская клиническая больница №1",
@@ -26,7 +29,8 @@ data = pd.DataFrame([
         "lon": 30.9942,
         "rkt": "Revolution Evo (28 срезов)",
         "mrt": "Ingenia Philips 1.5T",
-        "contacts": "📍 пр-т Октября, 96, Гомель\n📞 +375 232 95-70-01\n🌐 http://gkb1.by/"
+        "contacts": "📍 пр-т Октября, 96, Гомель\n📞 +375 232 95-70-01\n🌐 http://gkb1.by/",
+        "image": "images/gkb1.jpg"
     },
     {
         "name": "Мозырская городская больница",
@@ -34,7 +38,8 @@ data = pd.DataFrame([
         "lon": 29.2725,
         "rkt": "BrightSpeed Elite (16 срезов)",
         "mrt": "ANKE SuperMarie 1.5T",
-        "contacts": "📍 ул. Притыцкого, 47, Мозырь\n📞 +375 236 39-57-35\n🌐 http://mozyrcrb.by/"
+        "contacts": "📍 ул. Притыцкого, 47, Мозырь\n📞 +375 236 39-57-35\n🌐 http://mozyrcrb.by/",
+        "image": "images/mozyr_gor.jpg"
     },
     {
         "name": "Мозырская ЦРБ",
@@ -42,7 +47,8 @@ data = pd.DataFrame([
         "lon": 29.2596,
         "rkt": "Somatom go.Up (32 среза)",
         "mrt": "MagFinder WA 13200 (1.5T)",
-        "contacts": "📍 ул. Советская, 176, Мозырь\n📞 +375 236 39-57-35\n🌐 http://mozyrcrb.by/"
+        "contacts": "📍 ул. Советская, 176, Мозырь\n📞 +375 236 39-57-35\n🌐 http://mozyrcrb.by/",
+        "image": "images/mozyr_crb.jpg"
     },
     {
         "name": "Жлобинская ЦРБ",
@@ -50,7 +56,8 @@ data = pd.DataFrame([
         "lon": 30.0262,
         "rkt": "Somatom go.Up (32 среза)",
         "mrt": "—",
-        "contacts": "📍 ул. Первомайская, 40, Жлобин\n📞 +375 2334 79-316\n🌐 https://zhlcrb.by/"
+        "contacts": "📍 ул. Первомайская, 40, Жлобин\n📞 +375 2334 79-316\n🌐 https://zhlcrb.by/",
+        "image": "images/zhlobin.jpg"
     },
     {
         "name": "Светлогорская ЦРБ",
@@ -58,7 +65,8 @@ data = pd.DataFrame([
         "lon": 29.7396,
         "rkt": "Toshiba Aquilion (16 срезов)",
         "mrt": "—",
-        "contacts": "📍 ул. Интернациональная, 14, Светлогорск\n📞 +375 2342 3-19-94\n🌐 http://svcrb.by/"
+        "contacts": "📍 ул. Интернациональная, 14, Светлогорск\n📞 +375 2342 3-19-94\n🌐 http://svcrb.by/",
+        "image": "images/svetlogorsk.jpg"
     },
     {
         "name": "Речицкая ЦРБ",
@@ -66,7 +74,8 @@ data = pd.DataFrame([
         "lon": 30.3896,
         "rkt": "Ventum (64 среза)",
         "mrt": "—",
-        "contacts": "📍 ул. Советская, 144, Речица\n📞 +375 2340 3-60-85\n🌐 http://rechcrb.by/"
+        "contacts": "📍 ул. Советская, 144, Речица\n📞 +375 2340 3-60-85\n🌐 http://rechcrb.by/",
+        "image": "images/rechitsa.jpg"
     },
     {
         "name": "Петриковская ЦРБ",
@@ -74,7 +83,8 @@ data = pd.DataFrame([
         "lon": 28.4868,
         "rkt": "Ventum (64 среза)",
         "mrt": "—",
-        "contacts": "📍 ул. Кирова, 43, Петриков\n📞 +375 2350 5-13-60"
+        "contacts": "📍 ул. Кирова, 43, Петриков\n📞 +375 2350 5-13-60",
+        "image": "images/petrikov.jpg"
     },
     {
         "name": "Хойникская ЦРБ",
@@ -82,7 +92,8 @@ data = pd.DataFrame([
         "lon": 29.6257,
         "rkt": "Ventum (64 среза)",
         "mrt": "—",
-        "contacts": "📍 ул. Советская, 58, Хойники\n📞 +375 2336 5-13-81"
+        "contacts": "📍 ул. Советская, 58, Хойники\n📞 +375 2336 5-13-81",
+        "image": "images/khoiniki.jpg"
     },
     {
         "name": "Чечерская ЦРБ",
@@ -90,7 +101,8 @@ data = pd.DataFrame([
         "lon": 30.9040,
         "rkt": "Ventum (64 среза)",
         "mrt": "—",
-        "contacts": "📍 ул. Ленина, 15, Чечерск\n📞 +375 2332 2-12-65"
+        "contacts": "📍 ул. Ленина, 15, Чечерск\n📞 +375 2332 2-12-65",
+        "image": "images/chechersk.jpg"
     },
 ])
 
@@ -131,7 +143,7 @@ st.pydeck_chart(pdk.Deck(
             "ScatterplotLayer",
             data=filtered,
             get_position='[lon, lat]',
-            get_radius=150,
+            get_radius=250,
             get_fill_color=[255, 0, 0, 160],
             pickable=True
         ),
@@ -164,3 +176,9 @@ st.markdown(f"""
 - **📞 Контакты:**  
 {selected_row['contacts']}
 """)
+
+# Фотография
+if os.path.exists(selected_row["image"]):
+    st.image(selected_row["image"], caption=selected_row["name"], use_column_width=True)
+else:
+    st.info("Фото пока недоступно.")
