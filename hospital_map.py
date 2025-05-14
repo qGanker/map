@@ -83,7 +83,7 @@ data = pd.DataFrame([
     },
 ])
 
-# Заголовок страницы
+# Заголовок
 st.title("🏥 Учреждения здравоохранения Гомельской области")
 
 # Фильтры
@@ -98,22 +98,22 @@ if has_mrt:
     filtered = filtered[~filtered["mrt"].str.strip().isin(["—", "Нет", ""])]
 
 # Выбор учреждения
-selected_name = st.selectbox("📋 Выберите учреждение", filtered["name"] if not filtered.empty else ["Нет учреждений"])
-
-# Проверка и извлечение координат
 if not filtered.empty:
+    selected_name = st.selectbox("📋 Выберите учреждение", filtered["name"])
     selected_row = filtered[filtered["name"] == selected_name].iloc[0]
-    zoom_level = 15  # увеличиваем
+    lat_center = selected_row["lat"]
+    lon_center = selected_row["lon"]
+    zoom_level = 15  # Увеличенный зум
 else:
-    st.warning("Нет учреждений, удовлетворяющих выбранным фильтрам.")
+    st.warning("Нет учреждений, удовлетворяющих фильтрам.")
     st.stop()
 
-# Отображение карты
+# Карта с приближением к выбранной больнице
 st.pydeck_chart(pdk.Deck(
-    map_style=None,
+    map_style="mapbox://styles/mapbox/light-v9",
     initial_view_state=pdk.ViewState(
-        latitude=selected_row["lat"],
-        longitude=selected_row["lon"],
+        latitude=lat_center,
+        longitude=lon_center,
         zoom=zoom_level,
         pitch=0,
     ),
@@ -124,7 +124,7 @@ st.pydeck_chart(pdk.Deck(
             get_position='[lon, lat]',
             get_radius=200,
             get_fill_color=[255, 0, 0, 160],
-            pickable=True
+            pickable=True,
         ),
         pdk.Layer(
             "TextLayer",
