@@ -286,6 +286,6 @@ st.markdown(f"""
 
 # Фотография
 if os.path.exists(selected_row["image"]):
-    st.image(selected_row["image"], caption=selected_row["name"], use_column_width=True)
+    st.image(selected_row["image"], caption=selected_row["name"], use_container_width=True)
 else:
     st.info("Фото пока недоступно.")
