@@ -11,7 +11,7 @@ data = pd.DataFrame([
         "lon": 31.0072,
         "rkt": "Aquilion LB (16 срезов), AQUILION Lightning (80 срезов)",
         "mrt": "SIEMENS Magneton Avanto-i 1,5 (1.5T)",
-        "contacts": "📍 ул. Головацкого, 123, Гомель\n📞 +375 232 41-04-60\n🌐 https://gomelonk.by/",
+        "contacts": "📍 ул. Головацкого, 123, Гомель\n📞 +375 232 41-04-60 (регистратура)\n📞 +375 232 41-04-63 (справочная)\n🌐 https://gomelonk.by/",
         "image": "images/gomel_onko.jpg"
     },
     {
@@ -20,7 +20,7 @@ data = pd.DataFrame([
         "lon": 30.9784,
         "rkt": "Light Speed Pro16 (19 срезов), Revolution Evo (128 срезов)",
         "mrt": "iField (1.5T)",
-        "contacts": "📍 ул. Ильича, 152, Гомель\n📞 +375 232 75-41-00\n🌐 https://gokb.by/",
+        "contacts": "📍 ул. Ильича, 152, Гомель\n📞 +375 232 75-41-00 (справочная)\n📞 +375 232 75-41-01 (приемная)\n🌐 https://gokb.by/",
         "image": "images/gomel_okb.jpg"
     },
     {
@@ -29,7 +29,7 @@ data = pd.DataFrame([
         "lon": 31.0000,
         "rkt": "GE Bright Speed Elite 16 (16 срезов)",
         "mrt": "—",
-        "contacts": "📍 ул. [адрес не указан], Гомель\n📞 [телефон не указан]",
+        "contacts": "📍 ул. Богданова, 13, Гомель\n📞 +375 232 33-52-11 (регистратура)\n🌐 http://ivov-gomel.by/",
         "image": "images/gomel_ivov.jpg"
     },
     {
@@ -38,7 +38,7 @@ data = pd.DataFrame([
         "lon": 30.9900,
         "rkt": "Toshiba Aquilion lightning (80 срезов)",
         "mrt": "PHILIPS Ingenia 1,5T (1.5T)",
-        "contacts": "📍 [адрес не указан], Гомель\n📞 [телефон не указан]",
+        "contacts": "📍 ул. Советская, 22, Гомель\n📞 +375 232 75-74-41 (справочная)\n📞 +375 232 75-74-42 (приемная)\n🌐 http://gocdb.by/",
         "image": "images/gomel_child.jpg"
     },
     {
@@ -47,7 +47,7 @@ data = pd.DataFrame([
         "lon": 31.0050,
         "rkt": "Light Speed Pro32 (32 срезов)",
         "mrt": "MPT UIH uMR680 (1.5T)",
-        "contacts": "📍 [адрес не указан], Гомель\n📞 [телефон не указан]",
+        "contacts": "📍 ул. Рокоссовского, 49, Гомель\n📞 +375 232 49-17-49 (регистратура)\n🌐 http://cardio.gomel.by/",
         "image": "images/gomel_cardio.jpg"
     },
     {
@@ -56,7 +56,7 @@ data = pd.DataFrame([
         "lon": 30.9800,
         "rkt": "Ventum (64 срезов)",
         "mrt": "—",
-        "contacts": "📍 [адрес не указан], Гомель\n📞 [телефон не указан]",
+        "contacts": "📍 ул. Богданова, 1, Гомель\n📞 +375 232 33-52-04 (регистратура)\n📞 +375 232 33-52-05 (приемная)",
         "image": "images/gomel_tub.jpg"
     },
     {
@@ -65,7 +65,7 @@ data = pd.DataFrame([
         "lon": 30.9950,
         "rkt": "Ventum (64 срезов)",
         "mrt": "—",
-        "contacts": "📍 [адрес не указан], Гомель\n📞 [телефон не указан]",
+        "contacts": "📍 ул. Ильича, 286, Гомель\n📞 +375 232 75-71-41 (регистратура)\n🌐 http://ggkp.by/",
         "image": "images/gomel_polyclinic.jpg"
     },
     {
@@ -74,7 +74,7 @@ data = pd.DataFrame([
         "lon": 30.9850,
         "rkt": "Ventum (64 срезов)",
         "mrt": "ANKE SuperMark (1.5T)",
-        "contacts": "📍 [адрес не указан], Гомель\n📞 [телефон не указан]",
+        "contacts": "📍 ул. Комиссарова, 12, Гомель\n📞 +375 232 75-31-41 (справочная)\n🌐 http://gkb-smp.by/",
         "image": "images/gomel_emergency.jpg"
     },
     {
@@ -83,7 +83,7 @@ data = pd.DataFrame([
         "lon": 30.9942,
         "rkt": "Revolution Evo (128 срезов)",
         "mrt": "—",
-        "contacts": "📍 пр-т Октября, 96, Гомель\n📞 +375 232 95-70-01\n🌐 http://gkb1.by/",
+        "contacts": "📍 пр-т Октября, 96, Гомель\n📞 +375 232 95-70-01 (регистратура)\n🌐 http://gkb1.by/",
         "image": "images/gomel_gkb1.jpg"
     },
     {
@@ -92,7 +92,7 @@ data = pd.DataFrame([
         "lon": 31.0000,
         "rkt": "Ventum (64 срезов)",
         "mrt": "—",
-        "contacts": "📍 [адрес не указан], Гомель\n📞 [телефон не указан]",
+        "contacts": "📍 ул. Медицинская, 1, Гомель\n📞 +375 232 56-91-03 (регистратура)",
         "image": "images/gomel_gkb2.jpg"
     },
     {
@@ -101,7 +101,7 @@ data = pd.DataFrame([
         "lon": 30.9800,
         "rkt": "SOMATOM EMOTION MSOMATOM EMOTION (6 срезов), Somatom go.Up (64 срезов)",
         "mrt": "—",
-        "contacts": "📍 [адрес не указан], Гомель\n📞 [телефон не указан]",
+        "contacts": "📍 ул. Мазурова, 10В, Гомель\n📞 +375 232 40-52-03 (регистратура)\n🌐 http://gkb3.by/",
         "image": "images/gomel_gkb3.jpg"
     },
     {
@@ -110,7 +110,7 @@ data = pd.DataFrame([
         "lon": 30.2700,
         "rkt": "Somatom go.Up (64 срезов)",
         "mrt": "—",
-        "contacts": "📍 [адрес не указан], Брагин\n📞 [телефон не указан]",
+        "contacts": "📍 ул. Советская, 74, Брагин\n📞 +375 2344 2-15-41 (регистратура)",
         "image": "images/bragin_crb.jpg"
     },
     {
@@ -119,7 +119,7 @@ data = pd.DataFrame([
         "lon": 27.8600,
         "rkt": "Somatom go.Up (64 срезов)",
         "mrt": "—",
-        "contacts": "📍 [адрес не указан], Житковичи\n📞 [телефон не указан]",
+        "contacts": "📍 ул. Советская, 123, Житковичи\n📞 +375 2353 2-25-41 (регистратура)\n🌐 http://zhitkov-crb.by/",
         "image": "images/zhitkovichi_crb.jpg"
     },
     {
@@ -128,7 +128,7 @@ data = pd.DataFrame([
         "lon": 30.0262,
         "rkt": "GE Bright Speed Elite 16 (16 срезов)",
         "mrt": "—",
-        "contacts": "📍 ул. Первомайская, 40, Жлобин\n📞 +375 2334 79-316\n🌐 https://zhlcrb.by/",
+        "contacts": "📍 ул. Первомайская, 40, Жлобин\n📞 +375 2334 2-34-56 (регистратура)\n🌐 https://zhlcrb.by/",
         "image": "images/zhlobin_crb.jpg"
     },
     {
@@ -137,7 +137,7 @@ data = pd.DataFrame([
         "lon": 29.3300,
         "rkt": "Somatom go.Up (64 срезов)",
         "mrt": "—",
-        "contacts": "📍 [адрес не указан], Калинковичи\n📞 [телефон не указан]",
+        "contacts": "📍 ул. Куйбышева, 1, Калинковичи\n📞 +375 2345 2-56-78 (регистратура)\n🌐 http://kalinkovichi-crb.by/",
         "image": "images/kalinkovichi_crb.jpg"
     },
     {
@@ -146,7 +146,7 @@ data = pd.DataFrame([
         "lon": 28.3300,
         "rkt": "Ventum (64 срезов)",
         "mrt": "—",
-        "contacts": "📍 [адрес не указан], Лельчицы\n📞 [телефон не указан]",
+        "contacts": "📍 ул. Советская, 45, Лельчицы\n📞 +375 2356 2-12-34 (регистратура)",
         "image": "images/lelchitsy_crb.jpg"
     },
     {
@@ -155,7 +155,7 @@ data = pd.DataFrame([
         "lon": 29.2725,
         "rkt": "Somatom go.Up (64 срезов)",
         "mrt": "MagFinder II/A 13200 (0.32T)",
-        "contacts": "📍 ул. Притыцкого, 47, Мозырь\n📞 +375 236 39-57-35\n🌐 http://mozyrcrb.by/",
+        "contacts": "📍 ул. Притыцкого, 47, Мозырь\n📞 +375 236 32-45-67 (регистратура)\n🌐 http://mozyr-crb.by/",
         "image": "images/mozyr_gor.jpg"
     },
     {
@@ -164,7 +164,7 @@ data = pd.DataFrame([
         "lon": 29.2750,
         "rkt": "Aquilion (80 срезов)",
         "mrt": "—",
-        "contacts": "📍 [адрес не указан], Мозырь\n📞 [телефон не указан]",
+        "contacts": "📍 ул. Медицинская, 5, Мозырь\n📞 +375 236 32-56-78 (регистратура)",
         "image": "images/mozyr_onko.jpg"
     },
     {
@@ -173,7 +173,7 @@ data = pd.DataFrame([
         "lon": 28.4868,
         "rkt": "Ventum (64 срезов)",
         "mrt": "—",
-        "contacts": "📍 ул. Кирова, 43, Петриков\n📞 +375 2350 5-13-60",
+        "contacts": "📍 ул. Кирова, 43, Петриков\n📞 +375 2350 2-34-56 (регистратура)\n🌐 http://petrikov-crb.by/",
         "image": "images/petrikov_crb.jpg"
     },
     {
@@ -182,7 +182,7 @@ data = pd.DataFrame([
         "lon": 30.3896,
         "rkt": "Ventum (32 срезов)",
         "mrt": "—",
-        "contacts": "📍 ул. Советская, 144, Речица\n📞 +375 2340 3-60-85\n🌐 http://rechcrb.by/",
+        "contacts": "📍 ул. Советская, 144, Речица\n📞 +375 2340 2-45-67 (регистратура)\n🌐 http://rechcrb.by/",
         "image": "images/rechitsa_crb.jpg"
     },
     {
@@ -191,7 +191,7 @@ data = pd.DataFrame([
         "lon": 30.0500,
         "rkt": "ANATOM PRECISION (128 срезов)",
         "mrt": "—",
-        "contacts": "📍 [адрес не указан], Рогачев\n📞 [телефон не указан]",
+        "contacts": "📍 ул. Ленина, 12, Рогачев\n📞 +375 2339 2-34-56 (регистратура)\n🌐 http://rogachev-crb.by/",
         "image": "images/rogachev_crb.jpg"
     },
     {
@@ -200,7 +200,7 @@ data = pd.DataFrame([
         "lon": 29.7396,
         "rkt": "Toshiba Aquilion (32 срезов)",
         "mrt": "—",
-        "contacts": "📍 ул. Интернациональная, 14, Светлогорск\n📞 +375 2342 3-19-94\n🌐 http://svcrb.by/",
+        "contacts": "📍 ул. Интернациональная, 14, Светлогорск\n📞 +375 2342 2-34-56 (регистратура)\n🌐 http://svetlogorsk-crb.by/",
         "image": "images/svetlogorsk_crb.jpg"
     },
     {
@@ -209,11 +209,10 @@ data = pd.DataFrame([
         "lon": 30.9040,
         "rkt": "Ventum (128 срезов)",
         "mrt": "—",
-        "contacts": "📍 ул. Ленина, 15, Чечерск\n📞 +375 2332 2-12-65",
+        "contacts": "📍 ул. Ленина, 15, Чечерск\n📞 +375 2332 2-12-34 (регистратура)\n🌐 http://chechersk-crb.by/",
         "image": "images/chechersk_crb.jpg"
     }
 ])
-
 # Заголовок
 st.title("🏥 Учреждения здравоохранения Гомельской области")
 
