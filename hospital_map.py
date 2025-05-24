@@ -21,7 +21,7 @@ data = pd.DataFrame([
         "rkt": "Light Speed Pro16 (19 срезов), Revolution Evo (128 срезов)",
         "mrt": "iField (1.5T)",
         "contacts": "📍 ул. Ильича, 152, Гомель\n📞 +375 232 75-41-00\n🌐 https://gokb.by/",
-        "image": "images/gomel_obl.jpg"
+        "image": "images/gomel_okb.jpg"
     },
     {
         "name": "Гомельский областной клинический госпиталь ИВОВ",
@@ -30,7 +30,7 @@ data = pd.DataFrame([
         "rkt": "GE Bright Speed Elite 16 (16 срезов)",
         "mrt": "—",
         "contacts": "📍 ул. [адрес не указан], Гомель\n📞 [телефон не указан]",
-        "image": "images/default.jpg"
+        "image": "images/gomel_ivov.jpg"
     },
     {
         "name": "Гомельская областная клиническая детская больница",
@@ -39,7 +39,7 @@ data = pd.DataFrame([
         "rkt": "Toshiba Aquilion lightning (80 срезов)",
         "mrt": "PHILIPS Ingenia 1,5T (1.5T)",
         "contacts": "📍 [адрес не указан], Гомель\n📞 [телефон не указан]",
-        "image": "images/default.jpg"
+        "image": "images/gomel_child.jpg"
     },
     {
         "name": "Гомельский областной клинический кардиологический центр",
@@ -48,7 +48,7 @@ data = pd.DataFrame([
         "rkt": "Light Speed Pro32 (32 срезов)",
         "mrt": "MPT UIH uMR680 (1.5T)",
         "contacts": "📍 [адрес не указан], Гомель\n📞 [телефон не указан]",
-        "image": "images/default.jpg"
+        "image": "images/gomel_cardio.jpg"
     },
     {
         "name": "Гомельская областная клиническая туберкулезная больница",
@@ -57,7 +57,7 @@ data = pd.DataFrame([
         "rkt": "Ventum (64 срезов)",
         "mrt": "—",
         "contacts": "📍 [адрес не указан], Гомель\n📞 [телефон не указан]",
-        "image": "images/default.jpg"
+        "image": "images/gomel_tub.jpg"
     },
     {
         "name": "Гомельская центральная городская клиническая поликлиника",
@@ -66,7 +66,7 @@ data = pd.DataFrame([
         "rkt": "Ventum (64 срезов)",
         "mrt": "—",
         "contacts": "📍 [адрес не указан], Гомель\n📞 [телефон не указан]",
-        "image": "images/default.jpg"
+        "image": "images/gomel_polyclinic.jpg"
     },
     {
         "name": "Гомельская городская клиническая больница скорой медицинской помощи",
@@ -75,7 +75,7 @@ data = pd.DataFrame([
         "rkt": "Ventum (64 срезов)",
         "mrt": "ANKE SuperMark (1.5T)",
         "contacts": "📍 [адрес не указан], Гомель\n📞 [телефон не указан]",
-        "image": "images/default.jpg"
+        "image": "images/gomel_emergency.jpg"
     },
     {
         "name": "Гомельская городская больница №1",
@@ -84,7 +84,7 @@ data = pd.DataFrame([
         "rkt": "Revolution Evo (128 срезов)",
         "mrt": "—",
         "contacts": "📍 пр-т Октября, 96, Гомель\n📞 +375 232 95-70-01\n🌐 http://gkb1.by/",
-        "image": "images/gkb1.jpg"
+        "image": "images/gomel_gkb1.jpg"
     },
     {
         "name": "Гомельская городская больница №2",
@@ -93,7 +93,7 @@ data = pd.DataFrame([
         "rkt": "Ventum (64 срезов)",
         "mrt": "—",
         "contacts": "📍 [адрес не указан], Гомель\n📞 [телефон не указан]",
-        "image": "images/default.jpg"
+        "image": "images/gomel_gkb2.jpg"
     },
     {
         "name": "Гомельская городская клиническая больница №3",
@@ -102,7 +102,7 @@ data = pd.DataFrame([
         "rkt": "SOMATOM EMOTION MSOMATOM EMOTION (6 срезов), Somatom go.Up (64 срезов)",
         "mrt": "—",
         "contacts": "📍 [адрес не указан], Гомель\n📞 [телефон не указан]",
-        "image": "images/default.jpg"
+        "image": "images/gomel_gkb3.jpg"
     },
     {
         "name": "Брагинская ЦРБ",
@@ -111,7 +111,7 @@ data = pd.DataFrame([
         "rkt": "Somatom go.Up (64 срезов)",
         "mrt": "—",
         "contacts": "📍 [адрес не указан], Брагин\n📞 [телефон не указан]",
-        "image": "images/default.jpg"
+        "image": "images/bragin_crb.jpg"
     },
     {
         "name": "Житковичская ЦРБ",
@@ -120,7 +120,7 @@ data = pd.DataFrame([
         "rkt": "Somatom go.Up (64 срезов)",
         "mrt": "—",
         "contacts": "📍 [адрес не указан], Житковичи\n📞 [телефон не указан]",
-        "image": "images/default.jpg"
+        "image": "images/zhitkovichi_crb.jpg"
     },
     {
         "name": "Жлобинская ЦРБ",
@@ -129,7 +129,7 @@ data = pd.DataFrame([
         "rkt": "GE Bright Speed Elite 16 (16 срезов)",
         "mrt": "—",
         "contacts": "📍 ул. Первомайская, 40, Жлобин\n📞 +375 2334 79-316\n🌐 https://zhlcrb.by/",
-        "image": "images/zhlobin.jpg"
+        "image": "images/zhlobin_crb.jpg"
     },
     {
         "name": "Калинковичская ЦРБ",
@@ -138,7 +138,7 @@ data = pd.DataFrame([
         "rkt": "Somatom go.Up (64 срезов)",
         "mrt": "—",
         "contacts": "📍 [адрес не указан], Калинковичи\n📞 [телефон не указан]",
-        "image": "images/default.jpg"
+        "image": "images/kalinkovichi_crb.jpg"
     },
     {
         "name": "Лельчицкая ЦРБ",
@@ -147,7 +147,7 @@ data = pd.DataFrame([
         "rkt": "Ventum (64 срезов)",
         "mrt": "—",
         "contacts": "📍 [адрес не указан], Лельчицы\n📞 [телефон не указан]",
-        "image": "images/default.jpg"
+        "image": "images/lelchitsy_crb.jpg"
     },
     {
         "name": "Мозырская городская больница",
@@ -165,7 +165,7 @@ data = pd.DataFrame([
         "rkt": "Aquilion (80 срезов)",
         "mrt": "—",
         "contacts": "📍 [адрес не указан], Мозырь\n📞 [телефон не указан]",
-        "image": "images/default.jpg"
+        "image": "images/mozyr_onko.jpg"
     },
     {
         "name": "Петриковская ЦРБ",
@@ -174,7 +174,7 @@ data = pd.DataFrame([
         "rkt": "Ventum (64 срезов)",
         "mrt": "—",
         "contacts": "📍 ул. Кирова, 43, Петриков\n📞 +375 2350 5-13-60",
-        "image": "images/petrikov.jpg"
+        "image": "images/petrikov_crb.jpg"
     },
     {
         "name": "Речицкая ЦРБ",
@@ -183,7 +183,7 @@ data = pd.DataFrame([
         "rkt": "Ventum (32 срезов)",
         "mrt": "—",
         "contacts": "📍 ул. Советская, 144, Речица\n📞 +375 2340 3-60-85\n🌐 http://rechcrb.by/",
-        "image": "images/rechitsa.jpg"
+        "image": "images/rechitsa_crb.jpg"
     },
     {
         "name": "Рогачевская ЦРБ",
@@ -192,7 +192,7 @@ data = pd.DataFrame([
         "rkt": "ANATOM PRECISION (128 срезов)",
         "mrt": "—",
         "contacts": "📍 [адрес не указан], Рогачев\n📞 [телефон не указан]",
-        "image": "images/default.jpg"
+        "image": "images/rogachev_crb.jpg"
     },
     {
         "name": "Светлогорская ЦРБ",
@@ -201,7 +201,7 @@ data = pd.DataFrame([
         "rkt": "Toshiba Aquilion (32 срезов)",
         "mrt": "—",
         "contacts": "📍 ул. Интернациональная, 14, Светлогорск\n📞 +375 2342 3-19-94\n🌐 http://svcrb.by/",
-        "image": "images/svetlogorsk.jpg"
+        "image": "images/svetlogorsk_crb.jpg"
     },
     {
         "name": "Чечерская ЦРБ",
@@ -210,7 +210,7 @@ data = pd.DataFrame([
         "rkt": "Ventum (128 срезов)",
         "mrt": "—",
         "contacts": "📍 ул. Ленина, 15, Чечерск\n📞 +375 2332 2-12-65",
-        "image": "images/chechersk.jpg"
+        "image": "images/chechersk_crb.jpg"
     }
 ])
 
