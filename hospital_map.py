@@ -294,7 +294,7 @@ else:
     st.warning("Нет учреждений, удовлетворяющих выбранным фильтрам.")
     st.stop()
 
-# --- НОВЫЙ БЛОК ДЛЯ СОЗДАНИЯ КАРТЫ ---
+# --- БЛОК ДЛЯ СОЗДАНИЯ КАРТЫ ---
 # Создаем карту с центром в выбранной больнице
 m = folium.Map(location=[selected_row["lat"], selected_row["lon"]], zoom_start=zoom_level)
 
@@ -319,9 +319,8 @@ for idx, row in filtered.iterrows():
         tooltip=tooltip_text
     ).add_to(m)
 
-# Отображаем карту в Streamlit
-st_folium(m, width=725, height=500)
-# --- КОНЕЦ НОВОГО БЛОКА ---
+# Отображаем карту в Streamlit, отключая возврат объектов по клику
+st_folium(m, width=725, height=500, returned_objects=[])
 
 
 # Информация под картой (остается без изменений)
