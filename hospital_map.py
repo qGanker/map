@@ -1,7 +1,8 @@
 import streamlit as st
-import pydeck as pdk
 import pandas as pd
 import os
+import folium
+from streamlit_folium import st_folium
 
 # Загружаем данные
 data = pd.DataFrame([
@@ -96,14 +97,14 @@ data = pd.DataFrame([
         "image": "images/gomel_gkb1.jpg"
     },
     {
-        "name": "Гомельская городская поликлиника №1", # <-- НОВАЯ ЗАПИСЬ
+        "name": "Гомельская городская поликлиника №1",
         "lat": 52.4045,
         "lon": 31.0203,
         "rkt": "—",
         "mrt": "—",
         "uzi": "SONOLINE G50S, Sonoscape S20exp, Megas FD-570A, SIEMENS Sonoline G-50",
         "contacts": "📍 ул. Косарева, 19, Гомель\n📞 +375 232 31-99-60",
-        "image": "images/placeholder1.jpg"
+        "image": "images/placeholder.jpg"
     },
     {
         "name": "Гомельская городская больница №2",
@@ -126,24 +127,24 @@ data = pd.DataFrame([
         "image": "images/gomel_gkb3.jpg"
     },
     {
-        "name": "Гомельская городская больница №4", # <-- НОВАЯ ЗАПИСЬ
+        "name": "Гомельская городская больница №4",
         "lat": 52.4093,
         "lon": 30.9634,
         "rkt": "—",
         "mrt": "—",
         "uzi": "SONOACE R7, Aloka SSD-630",
         "contacts": "📍 ул. Богдана Хмельницкого, 79, Гомель\n📞 +375 232 53-35-64",
-        "image": "images/placeholder4.jpg"
+        "image": "images/placeholder.jpg"
     },
     {
-        "name": "Гомельская центральная городская детская клиническая поликлиника", # <-- НОВАЯ ЗАПИСЬ
+        "name": "Гомельская центральная городская детская клиническая поликлиника",
         "lat": 52.4495,
         "lon": 30.9680,
         "rkt": "—",
         "mrt": "—",
         "uzi": "LOGIQ (P9, P5), MINDRAY (МХ ДС7, DC7), SIEMENS (Sonoline G60S, Acusion NX3, Prima SLC), В-К Меdikal PRO FOKUS 2202, Chison Qbit10, WED-9618",
         "contacts": "📍 ул. Мазурова, 28, Гомель\n📞 +375 232 20-75-75\n🌐 http://gscdp.by/",
-        "image": "images/placeholder2.jpg"
+        "image": "images/placeholder.jpg"
     },
     {
         "name": "Брагинская ЦРБ",
@@ -285,7 +286,6 @@ if has_uzi:
 
 # Выбор учреждения
 if not filtered.empty:
-    # Сортируем отфильтрованный список по имени для удобства пользователя
     sorted_names = sorted(filtered["name"].unique())
     selected_name = st.selectbox("📋 Выберите учреждение", sorted_names)
     selected_row = filtered[filtered["name"] == selected_name].iloc[0]
@@ -294,45 +294,37 @@ else:
     st.warning("Нет учреждений, удовлетворяющих выбранным фильтрам.")
     st.stop()
 
-# Карта
-st.pydeck_chart(pdk.Deck(
-    map_style='mapbox://styles/mapbox/dark-v10',
-    initial_view_state=pdk.ViewState(
-        latitude=selected_row["lat"],
-        longitude=selected_row["lon"],
-        zoom=zoom_level,
-        pitch=0,
-    ),
-    layers=[
-        pdk.Layer(
-            "ScatterplotLayer",
-            data=filtered,
-            get_position='[lon, lat]',
-            get_radius=250,
-            get_fill_color=[255, 0, 0, 160],
-            pickable=True
-        ),
-        pdk.Layer(
-            "TextLayer",
-            data=filtered,
-            get_position='[lon, lat]',
-            get_text='name',
-            get_size=14,
-            get_color=[255, 255, 255],
-            get_alignment_baseline="'bottom'"
-        )
-    ],
-    tooltip={
-        "html": "<b>{name}</b><br/>🖥 РКТ: {rkt}<br/>🧲 МРТ: {mrt}<br/>🩺 УЗИ: {uzi}",
-        "style": {
-            "backgroundColor": "white",
-            "color": "black",
-            "fontSize": "12px"
-        }
-    }
-))
+# --- НОВЫЙ БЛОК ДЛЯ СОЗДАНИЯ КАРТЫ ---
+# Создаем карту с центром в выбранной больнице
+m = folium.Map(location=[selected_row["lat"], selected_row["lon"]], zoom_start=zoom_level)
 
-# Информация
+# Добавляем все отфильтрованные больницы на карту в виде кругов
+for idx, row in filtered.iterrows():
+    # Создаем текст для всплывающей подсказки
+    tooltip_text = f"""
+    <b>{row['name']}</b><br>
+    🖥 РКТ: {row['rkt']}<br>
+    🧲 МРТ: {row['mrt']}<br>
+    🩺 УЗИ: {row['uzi']}
+    """
+    
+    # Добавляем маркер на карту
+    folium.CircleMarker(
+        location=[row["lat"], row["lon"]],
+        radius=8,
+        color="red",
+        fill=True,
+        fill_color="red",
+        fill_opacity=0.7,
+        tooltip=tooltip_text
+    ).add_to(m)
+
+# Отображаем карту в Streamlit
+st_folium(m, width=725, height=500)
+# --- КОНЕЦ НОВОГО БЛОКА ---
+
+
+# Информация под картой (остается без изменений)
 st.markdown(f"""
 ### ℹ️ Информация о выбранной больнице:
 - **Название:** {selected_row['name']}
