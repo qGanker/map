@@ -3,6 +3,7 @@ import pandas as pd
 import os
 import folium
 from streamlit_folium import st_folium
+from folium.plugins import Draw # <-- 1. Импортируем плагин для рисования
 
 # Загружаем данные
 data = pd.DataFrame([
@@ -300,15 +301,12 @@ m = folium.Map(location=[selected_row["lat"], selected_row["lon"]], zoom_start=z
 
 # Добавляем все отфильтрованные больницы на карту в виде кругов
 for idx, row in filtered.iterrows():
-    # Создаем текст для всплывающей подсказки
     tooltip_text = f"""
     <b>{row['name']}</b><br>
     🖥 РКТ: {row['rkt']}<br>
     🧲 МРТ: {row['mrt']}<br>
     🩺 УЗИ: {row['uzi']}
     """
-    
-    # Добавляем маркер на карту
     folium.CircleMarker(
         location=[row["lat"], row["lon"]],
         radius=8,
@@ -319,8 +317,22 @@ for idx, row in filtered.iterrows():
         tooltip=tooltip_text
     ).add_to(m)
 
-# Отображаем карту в Streamlit, отключая возврат объектов по клику
-st_folium(m, width=725, height=500, returned_objects=[])
+# --- 2. Создаем и добавляем на карту инструмент рисования, ОТКЛЮЧАЯ все кнопки ---
+draw = Draw(
+    export=False,
+    draw_options={
+        'polyline': False,
+        'polygon': False,
+        'circle': False,
+        'rectangle': False,
+        'circlemarker': False,
+        'marker': False  # <--- Самая важная строка, отключает синий флажок
+    })
+draw.add_to(m)
+
+
+# Отображаем карту в Streamlit
+st_folium(m, width=725, height=500)
 
 
 # Информация под картой (остается без изменений)
