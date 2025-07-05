@@ -302,7 +302,7 @@ with col1:
     # --- Карта ---
     st.subheader(f"Карта: {selected_row['name']}")
     
-    # ИСПРАВЛЕННЫЙ БЛОК КАРТЫ
+    # БЛОК КАРТЫ С ОКОНЧАТЕЛЬНЫМ ИСПРАВЛЕНИЕМ
     fig = px.scatter_map(
         filtered,
         lat="lat",
@@ -311,7 +311,7 @@ with col1:
         custom_data=['rkt', 'mrt', 'uzi'],
         zoom=zoom_level,
         height=700,
-        mapbox_style="open-street-map"  # <-- ИСПРАВЛЕНО НА ПРАВИЛЬНЫЙ ПАРАМЕТР
+        # ПАРАМЕТР СТИЛЯ УБРАН ИЗ ВЫЗОВА ФУНКЦИИ
     )
 
     # Объединяем все настройки в один вызов update_traces
@@ -323,7 +323,9 @@ with col1:
                       "🩺 УЗИ: %{customdata[2]}<extra></extra>"
     )
 
+    # ВСЕ НАСТРОЙКИ МАКЕТА, ВКЛЮЧАЯ СТИЛЬ КАРТЫ, ПРОИСХОДЯТ ЗДЕСЬ
     fig.update_layout(
+        map_style="open-street-map", # <-- ПРАВИЛЬНЫЙ ПАРАМЕТР И ПРАВИЛЬНОЕ МЕСТО
         center={'lat': selected_row["lat"], 'lon': selected_row["lon"]},
         margin={"r":0,"t":0,"l":0,"b":0}
     )
