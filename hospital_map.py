@@ -302,7 +302,6 @@ with col1:
     # --- Карта ---
     st.subheader(f"Карта: {selected_row['name']}")
     
-    # БЛОК КАРТЫ С ОКОНЧАТЕЛЬНЫМ ИСПРАВЛЕНИЕМ
     fig = px.scatter_map(
         filtered,
         lat="lat",
@@ -310,11 +309,9 @@ with col1:
         hover_name="name",
         custom_data=['rkt', 'mrt', 'uzi'],
         zoom=zoom_level,
-        height=700,
-        # ПАРАМЕТР СТИЛЯ УБРАН ИЗ ВЫЗОВА ФУНКЦИИ
+        height=700
     )
 
-    # Объединяем все настройки в один вызов update_traces
     fig.update_traces(
         marker={'size': 12, 'color': 'red'},
         hovertemplate="<b>%{hover_name}</b><br><br>" +
@@ -323,9 +320,9 @@ with col1:
                       "🩺 УЗИ: %{customdata[2]}<extra></extra>"
     )
 
-    # ВСЕ НАСТРОЙКИ МАКЕТА, ВКЛЮЧАЯ СТИЛЬ КАРТЫ, ПРОИСХОДЯТ ЗДЕСЬ
+    # ОКОНЧАТЕЛЬНО ИСПРАВЛЕННЫЙ БЛОК НАСТРОЕК МАКЕТА
     fig.update_layout(
-        map_style="open-street-map", # <-- ПРАВИЛЬНЫЙ ПАРАМЕТР И ПРАВИЛЬНОЕ МЕСТО
+        mapbox_style="open-street-map", # <-- Правильное имя параметра
         center={'lat': selected_row["lat"], 'lon': selected_row["lon"]},
         margin={"r":0,"t":0,"l":0,"b":0}
     )
