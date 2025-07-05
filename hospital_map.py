@@ -1,8 +1,7 @@
 import streamlit as st
 import pandas as pd
 import os
-import folium
-from streamlit_folium import st_folium
+import plotly.express as px
 
 # Загружаем данные
 data = pd.DataFrame([
@@ -289,39 +288,36 @@ if not filtered.empty:
     sorted_names = sorted(filtered["name"].unique())
     selected_name = st.selectbox("📋 Выберите учреждение", sorted_names)
     selected_row = filtered[filtered["name"] == selected_name].iloc[0]
-    zoom_level = 15
+    zoom_level = 12
 else:
     st.warning("Нет учреждений, удовлетворяющих выбранным фильтрам.")
     st.stop()
 
-# --- БЛОК ДЛЯ СОЗДАНИЯ КАРТЫ ---
-# Создаем карту с центром в выбранной больнице
-m = folium.Map(location=[selected_row["lat"], selected_row["lon"]], zoom_start=zoom_level)
+# --- НОВЫЙ БЛОК ДЛЯ СОЗДАНИЯ КАРТЫ PLOTLY ---
+fig = px.scatter_mapbox(
+    filtered,
+    lat="lat",
+    lon="lon",
+    hover_name="name",
+    hover_data={"rkt": True, "mrt": True, "uzi": True, "lat": False, "lon": False},
+    color_discrete_sequence=["red"],
+    zoom=zoom_level,
+    height=500
+)
 
-# Добавляем все отфильтрованные больницы на карту в виде кругов
-for idx, row in filtered.iterrows():
-    tooltip_text = f"""
-    <b>{row['name']}</b><br>
-    🖥 РКТ: {row['rkt']}<br>
-    🧲 МРТ: {row['mrt']}<br>
-    🩺 УЗИ: {row['uzi']}
-    """
-    folium.CircleMarker(
-        location=[row["lat"], row["lon"]],
-        radius=8,
-        color="red",
-        fill=True,
-        fill_color="red",
-        fill_opacity=0.7,
-        tooltip=tooltip_text
-    ).add_to(m)
-
+fig.update_layout(
+    mapbox_style="open-street-map", # Используем бесплатный стиль карты
+    mapbox_center_lon=selected_row["lon"],
+    mapbox_center_lat=selected_row["lat"],
+    margin={"r":0,"t":0,"l":0,"b":0}
+)
 
 # Отображаем карту в Streamlit
-st_folium(m, width=725, height=500, returned_objects=[])
+st.plotly_chart(fig, use_container_width=True)
+# --- КОНЕЦ НОВОГО БЛОКА ---
 
 
-# Информация под картой (остается без изменений)
+# Информация под картой
 st.markdown(f"""
 ### ℹ️ Информация о выбранной больнице:
 - **Название:** {selected_row['name']}
