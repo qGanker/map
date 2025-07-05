@@ -310,13 +310,16 @@ with col1:
         hover_name="name",
         custom_data=['rkt', 'mrt', 'uzi'],
         color_discrete_sequence=["#FF0000"],
-        size_max=15,
+        # size_max=15, # <-- ЭТОТ ПАРАМЕТР ВЫЗЫВАЛ ОШИБКУ И БЫЛ УДАЛЕН
         zoom=zoom_level,
         height=700,
-        style="open-street-map" # Новая функция использует 'style'
+        style="open-street-map"
     )
 
-    # Новый, правильный шаблон для всплывающей подсказки
+    # Устанавливаем правильный размер для всех точек
+    fig.update_traces(marker={'size': 12})
+    
+    # Устанавливаем правильный шаблон для всплывающей подсказки
     fig.update_traces(
         hovertemplate="<b>%{hover_name}</b><br><br>" +
                       "🖥️ РКТ: %{customdata[0]}<br>" +
@@ -325,7 +328,6 @@ with col1:
     )
 
     fig.update_layout(
-        # Новый, правильный формат для центра карты
         center={'lat': selected_row["lat"], 'lon': selected_row["lon"]},
         margin={"r":0,"t":0,"l":0,"b":0}
     )
