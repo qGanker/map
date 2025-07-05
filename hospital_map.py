@@ -311,7 +311,7 @@ with col1:
         custom_data=['rkt', 'mrt', 'uzi'],
         zoom=zoom_level,
         height=700,
-        style="open-street-map"
+        mapbox_style="open-street-map"  # <-- ИСПРАВЛЕНО НА ПРАВИЛЬНЫЙ ПАРАМЕТР
     )
 
     # Объединяем все настройки в один вызов update_traces
