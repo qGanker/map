@@ -103,7 +103,7 @@ data = pd.DataFrame([
         "mrt": "—",
         "uzi": "SONOLINE G50S, Sonoscape S20exp, Megas FD-570A, SIEMENS Sonoline G-50",
         "contacts": "📍 ул. Косарева, 19, Гомель\n📞 +375 232 31-99-60",
-        "image": "images/placeholder.jpg"
+        "image": "images/placeholder1.jpg"
     },
     {
         "name": "Гомельская городская больница №2",
@@ -133,7 +133,7 @@ data = pd.DataFrame([
         "mrt": "—",
         "uzi": "SONOACE R7, Aloka SSD-630",
         "contacts": "📍 ул. Богдана Хмельницкого, 79, Гомель\n📞 +375 232 53-35-64",
-        "image": "images/placeholder.jpg"
+        "image": "images/placeholder4.jpg"
     },
     {
         "name": "Гомельская центральная городская детская клиническая поликлиника", # <-- НОВАЯ ЗАПИСЬ
@@ -143,7 +143,7 @@ data = pd.DataFrame([
         "mrt": "—",
         "uzi": "LOGIQ (P9, P5), MINDRAY (МХ ДС7, DC7), SIEMENS (Sonoline G60S, Acusion NX3, Prima SLC), В-К Меdikal PRO FOKUS 2202, Chison Qbit10, WED-9618",
         "contacts": "📍 ул. Мазурова, 28, Гомель\n📞 +375 232 20-75-75\n🌐 http://gscdp.by/",
-        "image": "images/placeholder.jpg"
+        "image": "images/placeholder2.jpg"
     },
     {
         "name": "Брагинская ЦРБ",
