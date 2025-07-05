@@ -268,7 +268,7 @@ data = pd.DataFrame([
 ])
 # --- Основная часть приложения ---
 
-st.set_page_config(layout="wide") # Используем широкую верстку страницы
+st.set_page_config(layout="wide")
 st.title("🏥 Учреждения здравоохранения Гомельской области")
 
 # --- Фильтры в боковой панели ---
@@ -290,39 +290,46 @@ if not filtered.empty:
     sorted_names = sorted(filtered["name"].unique())
     selected_name = st.sidebar.selectbox("📋 Выберите учреждение", sorted_names)
     selected_row = filtered[filtered["name"] == selected_name].iloc[0]
-    zoom_level = 14 # Увеличенный зум для фокусировки
+    zoom_level = 14
 else:
     st.warning("Нет учреждений, удовлетворяющих выбранным фильтрам.")
     st.stop()
 
-# --- Новый интерфейс с двумя колонками ---
-col1, col2 = st.columns([3, 2]) # Левая колонка шире для карты
+# --- Интерфейс с двумя колонками ---
+col1, col2 = st.columns([3, 2])
 
 with col1:
     # --- Карта ---
     st.subheader(f"Карта: {selected_row['name']}")
-    fig = px.scatter_mapbox(
+    
+    # ИСПРАВЛЕННЫЙ БЛОК КАРТЫ
+    fig = px.scatter_map(
         filtered,
         lat="lat",
         lon="lon",
         hover_name="name",
-        hover_data={"rkt": "РКТ: %{customdata[0]}", 
-                    "mrt": "МРТ: %{customdata[1]}",
-                    "uzi": "УЗИ: %{customdata[2]}",
-                    "lat": False, "lon": False},
         custom_data=['rkt', 'mrt', 'uzi'],
-        color_discrete_sequence=["#FF0000"], # Яркий красный цвет
-        size_max=15, # Размер точек
-        zoom=zoom_level
+        color_discrete_sequence=["#FF0000"],
+        size_max=15,
+        zoom=zoom_level,
+        height=700,
+        style="open-street-map" # Новая функция использует 'style'
+    )
+
+    # Новый, правильный шаблон для всплывающей подсказки
+    fig.update_traces(
+        hovertemplate="<b>%{hover_name}</b><br><br>" +
+                      "🖥️ РКТ: %{customdata[0]}<br>" +
+                      "🧲 МРТ: %{customdata[1]}<br>" +
+                      "🩺 УЗИ: %{customdata[2]}<extra></extra>"
     )
 
     fig.update_layout(
-        mapbox_style="open-street-map",
-        mapbox_center_lon=selected_row["lon"],
-        mapbox_center_lat=selected_row["lat"],
-        margin={"r":0,"t":0,"l":0,"b":0},
-        height=700 # Увеличили высоту карты
+        # Новый, правильный формат для центра карты
+        center={'lat': selected_row["lat"], 'lon': selected_row["lon"]},
+        margin={"r":0,"t":0,"l":0,"b":0}
     )
+    
     st.plotly_chart(fig, use_container_width=True)
 
 with col2:
