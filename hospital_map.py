@@ -266,10 +266,12 @@ data = pd.DataFrame([
         "image": "images/chechersk_crb.jpg"
     }
 ])
-# Заголовок
+# --- Основная часть приложения ---
+
+st.set_page_config(layout="wide") # Используем широкую верстку страницы
 st.title("🏥 Учреждения здравоохранения Гомельской области")
 
-# Фильтры
+# --- Фильтры в боковой панели ---
 st.sidebar.header("🔎 Фильтры")
 has_rkt = st.sidebar.checkbox("Показать только с РКТ", value=False)
 has_mrt = st.sidebar.checkbox("Показать только с МРТ", value=False)
@@ -283,52 +285,61 @@ if has_mrt:
 if has_uzi:
     filtered = filtered[~filtered["uzi"].str.strip().isin(["—", "Нет", ""])]
 
-# Выбор учреждения
+# --- Выбор учреждения в боковой панели ---
 if not filtered.empty:
     sorted_names = sorted(filtered["name"].unique())
-    selected_name = st.selectbox("📋 Выберите учреждение", sorted_names)
+    selected_name = st.sidebar.selectbox("📋 Выберите учреждение", sorted_names)
     selected_row = filtered[filtered["name"] == selected_name].iloc[0]
-    zoom_level = 12
+    zoom_level = 14 # Увеличенный зум для фокусировки
 else:
     st.warning("Нет учреждений, удовлетворяющих выбранным фильтрам.")
     st.stop()
 
-# --- НОВЫЙ БЛОК ДЛЯ СОЗДАНИЯ КАРТЫ PLOTLY ---
-fig = px.scatter_mapbox(
-    filtered,
-    lat="lat",
-    lon="lon",
-    hover_name="name",
-    hover_data={"rkt": True, "mrt": True, "uzi": True, "lat": False, "lon": False},
-    color_discrete_sequence=["red"],
-    zoom=zoom_level,
-    height=500
-)
+# --- Новый интерфейс с двумя колонками ---
+col1, col2 = st.columns([3, 2]) # Левая колонка шире для карты
 
-fig.update_layout(
-    mapbox_style="open-street-map", # Используем бесплатный стиль карты
-    mapbox_center_lon=selected_row["lon"],
-    mapbox_center_lat=selected_row["lat"],
-    margin={"r":0,"t":0,"l":0,"b":0}
-)
+with col1:
+    # --- Карта ---
+    st.subheader(f"Карта: {selected_row['name']}")
+    fig = px.scatter_mapbox(
+        filtered,
+        lat="lat",
+        lon="lon",
+        hover_name="name",
+        hover_data={"rkt": "РКТ: %{customdata[0]}", 
+                    "mrt": "МРТ: %{customdata[1]}",
+                    "uzi": "УЗИ: %{customdata[2]}",
+                    "lat": False, "lon": False},
+        custom_data=['rkt', 'mrt', 'uzi'],
+        color_discrete_sequence=["#FF0000"], # Яркий красный цвет
+        size_max=15, # Размер точек
+        zoom=zoom_level
+    )
 
-# Отображаем карту в Streamlit
-st.plotly_chart(fig, use_container_width=True)
-# --- КОНЕЦ НОВОГО БЛОКА ---
+    fig.update_layout(
+        mapbox_style="open-street-map",
+        mapbox_center_lon=selected_row["lon"],
+        mapbox_center_lat=selected_row["lat"],
+        margin={"r":0,"t":0,"l":0,"b":0},
+        height=700 # Увеличили высоту карты
+    )
+    st.plotly_chart(fig, use_container_width=True)
 
+with col2:
+    # --- Информация о больнице ---
+    st.subheader(f"ℹ️ {selected_row['name']}")
+    
+    st.markdown("---")
+    st.markdown(f"**🖥️ РКТ:** {selected_row['rkt']}")
+    st.markdown(f"**🧲 МРТ:** {selected_row['mrt']}")
+    st.markdown(f"**🩺 УЗИ:** {selected_row['uzi']}")
+    st.markdown("---")
 
-# Информация под картой
-st.markdown(f"""
-### ℹ️ Информация о выбранной больнице:
-- **Название:** {selected_row['name']}
-- **🖥 РКТ:** {selected_row['rkt']}
-- **🧲 МРТ:** {selected_row['mrt']}
-- **🩺 УЗИ:** {selected_row['uzi']}
-- **📞 Контакты:** {selected_row['contacts']}
-""")
+    st.subheader("📞 Контакты")
+    st.info(selected_row['contacts'])
 
-# Фотография
-if "image" in selected_row and pd.notna(selected_row["image"]) and os.path.exists(selected_row["image"]):
-    st.image(selected_row["image"], caption=selected_row["name"], use_container_width=True)
-else:
-    st.info("Фото пока недоступно.")
+    # --- Фотография ---
+    if "image" in selected_row and pd.notna(selected_row["image"]) and os.path.exists(selected_row["image"]):
+        st.image(selected_row["image"], caption=selected_row["name"], use_container_width=True)
+    else:
+        st.info("Фотография для данного учреждения недоступна.")
