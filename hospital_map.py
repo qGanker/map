@@ -309,18 +309,14 @@ with col1:
         lon="lon",
         hover_name="name",
         custom_data=['rkt', 'mrt', 'uzi'],
-        color_discrete_sequence=["#FF0000"],
-        # size_max=15, # <-- ЭТОТ ПАРАМЕТР ВЫЗЫВАЛ ОШИБКУ И БЫЛ УДАЛЕН
         zoom=zoom_level,
         height=700,
         style="open-street-map"
     )
 
-    # Устанавливаем правильный размер для всех точек
-    fig.update_traces(marker={'size': 12})
-    
-    # Устанавливаем правильный шаблон для всплывающей подсказки
+    # Объединяем все настройки в один вызов update_traces
     fig.update_traces(
+        marker={'size': 12, 'color': 'red'},
         hovertemplate="<b>%{hover_name}</b><br><br>" +
                       "🖥️ РКТ: %{customdata[0]}<br>" +
                       "🧲 МРТ: %{customdata[1]}<br>" +
